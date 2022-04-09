@@ -68,4 +68,4 @@ docker build --platform linux/amd64 -t proton .
 ```
 
 # Credits
-Thanks to Jesse for the initial instructions!
+Thanks to @poplexity for the initial instructions!
