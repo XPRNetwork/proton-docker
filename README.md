@@ -1,40 +1,70 @@
-# 1. Install Docker
+# Installation
+Install docker from [Install Docker](https://docs.docker.com/get-docker/)
 
-https://docs.docker.com/get-docker/
+# Usage
 
-# 2. Build container
-
+**Run command below to start docker container (Replace `<HOME>` with your own working directory)**
 ```
-docker build --platform linux/amd64 -t proton .
-```
-
-# 3. Start Container
-
-Replace `/Users/jafri` with your own working directory
-
-```
+docker pull jafri/proton:latest;
 docker run \
   -d \
   --name proton \
   --platform linux/amd64 \
   --user 0 \
-  -v /Users/jafri:/Users/jafri \
-  -v /Users/jafri/eosio-wallet:/root/eosio-wallet \
-  -w /Users/jafri \
-  -e HOME=/Users/jafri \
-  proton
+  -v <HOME>:<HOME> \
+  -v <HOME>/eosio-wallet:/root/eosio-wallet \
+  -w <HOME> \
+  -e HOME=<HOME> \
+  jafri/proton:1.0;
 ```
 
-# 4. Open terminal
+**Open container**
 
 ```
 docker exec -it -u 0 proton /bin/sh
 ```
 
-# 5. (Helper) View running containers
+**Start node**
+```
+nodeos \
+  -e -p eosio \
+ --data-dir ./data \
+ --config-dir ./config \
+ --plugin eosio::http_plugin \
+ --plugin eosio::chain_plugin \
+ --plugin eosio::chain_api_plugin \
+ --plugin eosio::producer_plugin \
+ --http-server-address=0.0.0.0:8888 \
+ --access-control-allow-origin='*' \
+ --http-validate-host=false \
+ --max-transaction-time=200000 \
+ --disable-replay-opts \
+ --hard-replay \
+ --contracts-console \
+ --filter-on='*' \
+ --filter-out=eosio:onblock:"" &
+```
+
+**Start keosd**
+```
+keosd &
+```
+
+**Exit and re-enter**
+```
+exit
+docker exec -it -u 0 proton /bin/sh
+```
+
+**Verify Running**
+```
+cleos get info
+```
+
+# Manual building
 
 ```
-docker ps -a
+docker build --platform linux/amd64 -t proton .
 ```
 
 # Credits
