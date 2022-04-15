@@ -20,20 +20,15 @@ docker run \
 
 # Other options
 
-**Start keosd**
+**Open container (optional)**
+
 ```
-keosd &
+docker exec -it -u 0 proton /bin/sh
 ```
 
 **Verify Running**
 ```
 cleos get info
-```
-
-**Open container (optional)**
-
-```
-docker exec -it -u 0 proton /bin/sh
 ```
 
 **Start node**
@@ -59,6 +54,11 @@ nodeos \
 ```
 
 if you want to delete all blocks, add --delete-all-blocks as an option
+
+**Start keosd**
+```
+keosd &
+```
 
 **Exit**
 ```
