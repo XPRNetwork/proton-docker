@@ -14,4 +14,20 @@ RUN echo 'alias cleosp="cleos -u https://proton.cryptolions.io"' >> ~/.bashrc
 RUN echo 'alias cleospt="cleos -u https://testnet.protonchain.com"' >> ~/.bashrc
 RUN echo 'alias clwu="cleos wallet unlock"' >> ~/.bashrc
 
-CMD tail -f /dev/null
+CMD nodeos \
+  -e -p eosio \
+ --data-dir ./data \
+ --config-dir ./config \
+ --plugin eosio::http_plugin \
+ --plugin eosio::chain_plugin \
+ --plugin eosio::chain_api_plugin \
+ --plugin eosio::producer_plugin \
+ --http-server-address=0.0.0.0:8888 \
+ --access-control-allow-origin='*' \
+ --http-validate-host=false \
+ --max-transaction-time=200000 \
+ --disable-replay-opts \
+ --hard-replay \
+ --contracts-console \
+ --filter-on='*' \
+ --filter-out=eosio:onblock:''

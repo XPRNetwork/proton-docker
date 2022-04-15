@@ -1,9 +1,8 @@
-# Installation
+# Pre-Requisites
 Install docker from [Install Docker](https://docs.docker.com/get-docker/)
 
 # Usage
 
-**Run command below to start docker container (Replace `<HOME>` with your own working directory)**
 ```
 docker pull jafri/proton:latest;
 docker run \
@@ -15,16 +14,30 @@ docker run \
   -v <HOME>/eosio-wallet:/root/eosio-wallet \
   -w <HOME> \
   -e HOME=<HOME> \
-  jafri/proton:1.0;
+  -p 8888:8888 \
+  jafri/proton:1.3;
 ```
 
-**Open container**
+# Other options
+
+**Start keosd**
+```
+keosd &
+```
+
+**Verify Running**
+```
+cleos get info
+```
+
+**Open container (optional)**
 
 ```
 docker exec -it -u 0 proton /bin/sh
 ```
 
 **Start node**
+
 ```
 nodeos \
   -e -p eosio \
@@ -45,20 +58,11 @@ nodeos \
  --filter-out=eosio:onblock:"" &
 ```
 
-**Start keosd**
-```
-keosd &
-```
+if you want to delete all blocks, add --delete-all-blocks as an option
 
-**Exit and re-enter**
+**Exit**
 ```
 exit
-docker exec -it -u 0 proton /bin/sh
-```
-
-**Verify Running**
-```
-cleos get info
 ```
 
 # Manual building
